@@ -5,13 +5,13 @@ import com.pedropathing.util.Timer;
 
 import config.core.Robot;
 
-public class clawTransfer extends CommandBase {
+public class clawGrab extends CommandBase {
     private final Robot robot;
 
     private int state = 0;
     private Timer timer = new Timer();
 
-    public clawTransfer(Robot robot) {
+    public clawGrab(Robot robot) {
         this.robot = robot;
     }
 
@@ -24,24 +24,29 @@ public class clawTransfer extends CommandBase {
     public void execute() {
         switch (state) {
             case 1:
-                if (timer.getElapsedTimeSeconds()>0.35){
-                    robot.getI().transfer();
-                    robot.getI().clawVer();
-                    setState(2);
-                }
+                robot.getI().hover();
+                setState(2);
                 break;
             case 2:
-                if (timer.getElapsedTimeSeconds()>0.4){
+                if (timer.getElapsedTimeSeconds()>0.3){
                     robot.getI().clawOpen();
+                    robot.getI().collect();
+                    //robot.getI().clawClose();
                     setState(3);
                 }
                 break;
             case 3:
-                if (timer.getElapsedTimeSeconds()>0.3){
-                    robot.getI().avoid();
+                if(timer.getElapsedTimeSeconds() > 0.35) {
+                    robot.getI().clawClose();
+                    setState(4);
+                }
+                break;
+            case 4:
+                if (timer.getElapsedTimeSeconds()>0.35){
+                    robot.getI().hover();
                     setState(-1);
                 }
-
+                break;
         }
     }
     @Override

@@ -14,6 +14,7 @@ import config.core.Alliance;
 import config.core.OpModeCommand;
 import config.core.Robot;
 import config.core.paths.SamplePath;
+import config.core.paths.SpecimenPath;
 import config.subsystems.commands.ExtendDetect;
 import config.subsystems.commands.ExtendZero;
 
@@ -38,52 +39,20 @@ public class SpecimenAuto extends OpModeCommand {
         schedule(
                 new RunCommand(r::aPeriodic),
                 new SequentialCommandGroup(
-                        new ParallelCommandGroup(
-                                new FollowPath(r.getF(), SamplePath.preload(), true, 1),
-                                new PreloadBucket(r)
-                        ),
-                        new WaitCommand(200),
-                        new ParallelRaceGroup(
-                                new ParallelCommandGroup(
-                                        new FollowPath(r.getF(), SamplePath.grabSample1(), true, 1),
-                                        new Transfer(r)
-                                ),
-                                new ExtendZero(r)
-                        ),
-                        new clawCollect(r),
-                        new ParallelCommandGroup(
-                                new FollowPath(r.getF(), SamplePath.scoreSample1(), true, 1),
-                                new Bucket(r)
-                        ),
-                        new WaitCommand(200),
-                        new ParallelRaceGroup(
-                                new ParallelCommandGroup(
-                                        new FollowPath(r.getF(), SamplePath.grabSample2(), true, 1),
-                                        new Transfer(r)
-                                ),
-                                new ExtendZero(r)
-                        ),
-                        new clawCollect(r),
-                        new ParallelCommandGroup(
-                                new FollowPath(r.getF(), SamplePath.scoreSample2(), true, 1),
-                                new Bucket(r)
-                        ),
-                        new ParallelCommandGroup(
-                                new FollowPath(r.getF(), SamplePath.grabSample3(), true, 1),
-                                new Transfer(r)
-                        ),
-                        new clawCollect(r),
-                        new ParallelCommandGroup(
-                                new FollowPath(r.getF(), SamplePath.scoreSample3(), true, 1),
-                                new Bucket(r)
-                        ),
-                        new ParallelRaceGroup(
-                                new ParallelCommandGroup(
-                                        new FollowPath(r.getF(), SamplePath.grabSample4(), true, 1),
-                                        new Transfer(r)
-                                ),
-                                new ExtendZero(r)
-                        )
+                        new FollowPath(r.getF(), SpecimenPath.preload(), true, 0.8),
+                        new WaitCommand(500),
+                        new FollowPath(r.getF(), SpecimenPath.grabSample1(), true, 0.8),
+                        new WaitCommand(500),
+                        new FollowPath(r.getF(), SpecimenPath.giveSample1(), true, 0.8),
+                        new WaitCommand(500),
+                        new FollowPath(r.getF(), SpecimenPath.grabSample2(), true, 0.8),
+                        new WaitCommand(500),
+                        new FollowPath(r.getF(), SpecimenPath.giveSample2(), true, 0.8),
+                        new WaitCommand(500),
+                        new FollowPath(r.getF(), SpecimenPath.getSpecimen1(), true, 0.8),
+                        new WaitCommand(500),
+                        new FollowPath(r.getF(), SpecimenPath.scoreSpecimen1(), true, 0.8),
+                        new WaitCommand(500)
                 )
         );
     }

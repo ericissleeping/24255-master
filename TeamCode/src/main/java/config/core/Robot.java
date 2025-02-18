@@ -45,8 +45,9 @@ public class Robot {
     public Timer iTimer,tTimer,lTimer;
     public int iState=0, tState=0,lstate=0;
 
-    public double speed = 1;
-    private boolean returnBack=false, rightTriggerHold = false,speedState = false;
+    public double baseSpeed = 1;
+    private double turnSpeed=0.4;
+    private boolean returnBack=false;
     private boolean lockIntake=false;
     private boolean liftManual=true;
 
@@ -163,30 +164,6 @@ public class Robot {
         g1.copy(g1a);
         g2.copy(g2a);
 
-        l.manual(-g2.left_stick_y);//lift control
-
-
-
-        if  (Math.abs(g2.left_stick_y) > 0.1 && Math.abs(p2.left_stick_y) < 0.1){
-            l.setLiftManual(true);
-        }
-
-        l.manual(-g2.left_stick_y);//lift control
-
-        if (g2.dpad_left && !p2.dpad_left){
-            l.setLiftManual(false);
-            l.toChamberStart();
-        }
-        if (g2.dpad_right && !p2.dpad_right){
-            l.setLiftManual(false);
-            l.toChamberEnd();
-            startEndSpecimen();
-        }
-
-
-
-
-
         //hover and collect
 
         if(g1.right_bumper && !p1.right_bumper){
@@ -223,8 +200,6 @@ public class Robot {
             }
         }
 
-
-
         //turn claw direction
         if (g1.y && !p1.y){
             if (i.getIntakeDirection() == HOR){
@@ -234,6 +209,75 @@ public class Robot {
                 i.clawHor();
             }
         }
+
+        //extend lock
+        if (g1.b && !p1.b){
+            lockIntake=!lockIntake;
+        }
+        if (lockIntake){
+            e.extendToPos(300);
+        }
+        else{
+            if (i.getIntakeState() == HOVER || i.getIntakeState() == COLLECT){
+                baseSpeed=0.4;
+                turnSpeed=0.2;
+                e.manualSlowly(g1.right_trigger,g1.left_trigger);//extend control
+            }
+            else{
+                if (g2.right_trigger>0){
+                    baseSpeed=0.2;
+                    turnSpeed=0.2;
+                }
+                else{
+                    baseSpeed=1;
+                    turnSpeed=0.4;
+                }
+                e.manual(g1.right_trigger,g1.left_trigger);//extend control
+            }
+        }
+
+        //reset pp
+        if (g1.back && !p1.back){
+            pp.resetImu();
+        }
+        //claw status
+        if (g1.x && !p1.x){
+            if (i.getClawState() == Intake.clawState.OPEN){
+                i.clawClose();
+            }
+            else{
+                i.clawOpen();
+            }
+        }
+
+
+
+        l.manual(-g2.left_stick_y);//lift control
+
+
+
+        if  (Math.abs(g2.left_stick_y) > 0.1 && Math.abs(p2.left_stick_y) < 0.1){
+            l.setLiftManual(true);
+        }
+
+        l.manual(-g2.left_stick_y);//lift control
+
+        if (g2.dpad_left && !p2.dpad_left){
+            l.setLiftManual(false);
+            l.toChamberStart();
+        }
+        if (g2.dpad_right && !p2.dpad_right){
+            l.setLiftManual(false);
+            startEndSpecimen();
+        }
+
+
+
+
+
+
+
+
 
         //basket
         if (g2.left_bumper){
@@ -254,30 +298,6 @@ public class Robot {
         }
 
 
-//        if (g2.right_trigger>0 && !rightTriggerHold  ){
-//            rightTriggerHold = true;
-//            speedState = !speedState;
-//        }
-//        else if(!(g2.right_trigger>0) && rightTriggerHold){
-//            rightTriggerHold = false;
-//        }
-//
-//        if(speedState){
-//            speed = 0.2;
-//        }else{
-//            speed = 1;
-//        }
-
-
-
-        //lift control
-//        if (g2.dpad_right && !p2.dpad_right){
-//            l.toChamberStart();
-//        }
-//        if (g2.dpad_left && !p2.dpad_left){
-//            startEndSpecimen();
-//        }
-
         //Lock Control
         if (g2.y && !p2.y){
             if (l.getLockState()== OPEN){
@@ -288,37 +308,11 @@ public class Robot {
             }
         }
 
-        //extend lock
-        if (g1.b && !p1.b){
-            lockIntake=!lockIntake;
-        }
-        if (lockIntake){
-            e.extendToPos(300);
-        }
-        else{
-            if (i.getIntakeState() == HOVER || i.getIntakeState() == COLLECT){
-                speed=0.4;
-                e.manualSlowly(g1.right_trigger,g1.left_trigger);//extend control
-            }
-            else{
-                if (g2.right_trigger>0){
-                    speed=0.2;
-                }
-                else{
-                    speed=1;
-                }
-                e.manual(g1.right_trigger,g1.left_trigger);//extend control
-            }
-        }
-
-        //reset pp
-        if (g1.back && !p1.back){
-            pp.resetImu();
-        }
 
 
 
-        f.setTeleOpMovementVectors( -g1.left_stick_y*speed,  -g1.left_stick_x*speed, -g1.right_stick_x*0.4*speed, false);//chassis control
+
+        f.setTeleOpMovementVectors( -g1.left_stick_y*baseSpeed,  -g1.left_stick_x*baseSpeed, -g1.right_stick_x*turnSpeed, false);//chassis control
 
     }
 

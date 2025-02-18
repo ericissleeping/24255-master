@@ -33,7 +33,7 @@ public class Intake {
     public Servo intakeClaw;
     public static intakeState intakeState;
     public intakePivot intakeDirection;
-    public clawState clawState;
+    public static clawState clawState;
     ColorSensor color;
     private Telemetry telemetry;
 
@@ -137,12 +137,16 @@ public class Intake {
     public intakePivot getIntakeDirection(){
         return intakeDirection;
     }
+
+    public Intake.clawState getClawState() {
+        return clawState;
+    }
+
     public boolean detect(){
         if (color.red()>100){
             return true;
         }
         return false;
-
     }
 
     public void telemetry() {
