@@ -30,10 +30,48 @@ public class Detect extends CommandBase {
                 break;
             case 2:
                 if (robot.getI().detect()){
-                    setState(-1);
+                    setState(3);
                 }
                 else{
                     setState(1);
+                }
+            case 3:
+                if (timer.getElapsedTimeSeconds()>0.6){
+                    robot.getI().clawOpen();
+                    robot.getI().collect();
+                    //robot.getI().clawClose();
+                    setState(4);
+                }
+                break;
+            case 4:
+                if(timer.getElapsedTimeSeconds() > 0.35) {
+                    robot.getI().clawClose();
+                    setState(5);
+                }
+                break;
+            case 5:
+                if (timer.getElapsedTimeSeconds()>0.35){
+                    robot.getI().hover();
+                    setState(6);
+                }
+                break;
+            case 6:
+                if (timer.getElapsedTimeSeconds()>0.35){
+                    robot.getI().transfer();
+                    robot.getI().clawVer();
+                    setState(7);
+                }
+                break;
+            case 7:
+                if (timer.getElapsedTimeSeconds()>0.4){
+                    robot.getI().clawOpen();
+                    setState(8);
+                }
+                break;
+            case 8:
+                if (timer.getElapsedTimeSeconds()>0.3){
+                    robot.getI().avoid();
+                    setState(-1);
                 }
         }
     }

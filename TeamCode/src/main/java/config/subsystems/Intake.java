@@ -93,9 +93,11 @@ public class Intake {
     public void setClawState(clawState state){
         if (state == clawState.OPEN){
             intakeClaw.setPosition(INTAKE_CLAW_OPEN_POS);
+            this.clawState= Intake.clawState.OPEN;
         }
         else if (state == clawState.CLOSE){
             intakeClaw.setPosition(INTAKE_CLAW_CLOSE_POS);
+            this.clawState= Intake.clawState.CLOSE;
         }
     }
 
@@ -138,12 +140,12 @@ public class Intake {
         return intakeDirection;
     }
 
-    public Intake.clawState getClawState() {
+    public clawState getClawState() {
         return clawState;
     }
 
     public boolean detect(){
-        if (color.red()>100){
+        if (color.red()>90){
             return true;
         }
         return false;
@@ -152,6 +154,8 @@ public class Intake {
     public void telemetry() {
         telemetry.addData("Intake State: ", intakeState);
         telemetry.addData("Intake Claw Direction", intakeDirection);
+        telemetry.addData("Claw State", clawState);
+
     }
 
     public void periodic() {

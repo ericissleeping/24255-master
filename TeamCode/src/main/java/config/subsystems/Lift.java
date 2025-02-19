@@ -46,7 +46,7 @@ public class Lift {
     public static int target;
     public static double p = 0.01, i = 0, d = 0, f = 0.005;
 
-    private boolean liftManual=true;
+    private boolean liftManual=false; //remember to init this
 
 
     public Lift(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -158,6 +158,7 @@ public class Lift {
     public void toChamberStart() {
         setTarget(LIFT_SPECIMEN_START_POS);
     }
+
 
     public void toChamberEnd() {
         setTarget(LIFT_SPECIMEN_END_POS);

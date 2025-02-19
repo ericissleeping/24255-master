@@ -28,13 +28,13 @@ public class Bucket extends CommandBase {
                 setState(2);
                 break;
             case 2:
-                if (timer.getElapsedTimeSeconds() > 0.6) {
+                if (timer.getElapsedTimeSeconds() > 0.25) {
                     robot.getL().toHighBucket();
                     setState(3);
                 }
                 break;
             case 3:
-                if (timer.getElapsedTimeSeconds() > 0.75) {
+                if (timer.getElapsedTimeSeconds() > 0.9) {
                     robot.getO().score();
                     setState(4);
                 }

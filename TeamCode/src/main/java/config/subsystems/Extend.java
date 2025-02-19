@@ -50,7 +50,7 @@ public class Extend {
 
         }
         else{
-            extendMotor.setPower(0.4*(right - left));
+            extendMotor.setPower(0.5*(right - left));
         }
     }
 
@@ -71,7 +71,7 @@ public class Extend {
     }
 
     public void toZero(){
-        extendToPos(60);
+        extendToPos(220);
     }
 
     public void toFull(){

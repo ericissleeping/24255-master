@@ -118,6 +118,7 @@ public class Robot {
     public void tPeriodic() {
         updateControls();
         collect();
+        hover();
         transfer();
         endSpecimen();
 
@@ -168,8 +169,7 @@ public class Robot {
 
         if(g1.right_bumper && !p1.right_bumper){
             if (i.getIntakeState() == AVOID || i.getIntakeState() == TRANSFER){
-                i.hover();
-                i.clawOpen();
+                startHover();
                 if (returnBack){
                     i.clawHor();
                 }
@@ -220,7 +220,7 @@ public class Robot {
         else{
             if (i.getIntakeState() == HOVER || i.getIntakeState() == COLLECT){
                 baseSpeed=0.4;
-                turnSpeed=0.2;
+                turnSpeed=0.15;
                 e.manualSlowly(g1.right_trigger,g1.left_trigger);//extend control
             }
             else{
@@ -269,6 +269,10 @@ public class Robot {
         if (g2.dpad_right && !p2.dpad_right){
             l.setLiftManual(false);
             startEndSpecimen();
+        }
+        if (g2.dpad_down && !p2.dpad_down){
+            l.setLiftManual(false);
+            l.toZero();
         }
 
 
@@ -353,6 +357,21 @@ public class Robot {
         }
     }
 
+    private void hover(){
+        switch (iState){
+            case 4:
+                i.hover();
+                setIntakeState(5);
+                break;
+            case 5:
+                if (iTimer.getElapsedTimeSeconds()>0.4){
+                    i.clawOpen();
+                    setIntakeState(-1);
+                }
+                break;
+        }
+    }
+
     public void endSpecimen(){
         switch (lstate){
             case 1:
@@ -389,6 +408,9 @@ public class Robot {
     }
     public void startTransfer(){
         setTransferState(1);
+    }
+    public void startHover(){
+        setIntakeState(4);
     }
 
     public void startEndSpecimen(){

@@ -10,14 +10,14 @@ import com.pedropathing.pathgen.Point;
 public class SamplePath {
 
     public static Pose startPose = new Pose(8, 110, Math.toRadians(90));
-    public static Pose scorePose = new Pose(18, 123, Math.toRadians(135));
+    public static Pose scorePose = new Pose(17, 124, Math.toRadians(135));
     public static Pose grabSample1 = new Pose(30,119,Math.toRadians(180));
 
-    public static Pose scorePose1 = new Pose(20, 125, Math.toRadians(135));
+    public static Pose scorePose1 = new Pose(17, 124, Math.toRadians(135));
     public static Pose grabSample2= new Pose(30,128,Math.toRadians(180));
     public static Pose grabSample3= new Pose(31,130,Math.toRadians(-152));
-    public static Pose grabSample4= new Pose(64,100,Math.toRadians(90));
-    public static Pose detectSample4= new Pose(58,94,Math.toRadians(90));
+    public static Pose grabSample4= new Pose(62,96,Math.toRadians(100));
+    public static Pose detectSample4= new Pose(62,94,Math.toRadians(80));
 
 
 

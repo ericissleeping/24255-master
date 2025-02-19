@@ -37,7 +37,6 @@ public class ColorTestAuto extends OpModeCommand {
                 new RunCommand(r::aPeriodic),
                 new ParallelRaceGroup(
                         new Detect(r),
-                        new ExtendDetect(r),
                         new WaitCommand(4000)
                 )
         );

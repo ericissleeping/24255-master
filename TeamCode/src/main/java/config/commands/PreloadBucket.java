@@ -28,13 +28,13 @@ public class PreloadBucket extends CommandBase {
                 setState(2);
                 break;
             case 2:
-                if (timer.getElapsedTimeSeconds() > 0.8) {
+                if (timer.getElapsedTimeSeconds() > 0.6) {
                     robot.getL().toHighBucket();
                     setState(3);
                 }
                 break;
             case 3:
-                if (timer.getElapsedTimeSeconds() > 0.75) {
+                if (timer.getElapsedTimeSeconds() > 0.55) {
                     robot.getO().score();
                     setState(4);
                 }

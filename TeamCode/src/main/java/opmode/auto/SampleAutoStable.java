@@ -86,6 +86,11 @@ public class SampleAutoStable extends OpModeCommand {
                                         new Transfer(r)
                                 ),
                                 new ExtendZero(r)
+                        ),
+                        new WaitCommand(1000),
+                        new ParallelRaceGroup(
+                                new Detect(r),
+                                new WaitCommand(5000)
                         )
                 )
         );

@@ -32,13 +32,13 @@ public class RobotConstants {
     public static final double INTAKE_ROTATE_COLLECT_POS = .635;
     public static final double INTAKE_ROTATE_AVOID_POS = .128;
     public static final double INTAKE_ROTATE_HOVER_POS = .527;
-    public static final double INTAKE_ROTATE_HOVER_DETECT_POS = .679;
+    public static final double INTAKE_ROTATE_HOVER_DETECT_POS = .621;
     //flip
     public static final double INTAKE_FLIP_TRANSFER_POS = 0.768;
     public static final double INTAKE_FLIP_HOVER_POS = .214;
     public static final double INTAKE_FLIP_COLLECT_POS = .282;
     public static final double INTAKE_FLIP_AVOID_POS = .638;
-    public static final double INTAKE_FLIP_HOVER_DETECT_POS = .559;
+    public static final double INTAKE_FLIP_HOVER_DETECT_POS = .626;
     //claw pivot
     public static final double INTAKE_CLAW_HOR_POS = .412;
     public static final double INTAKE_CLAW_VER_POS = .073;
@@ -60,7 +60,7 @@ public class RobotConstants {
     // Lift Positions
     public static int liftToZero = 0;
     public static int liftToHighBucket = 1680;
-    public static final int LIFT_SPECIMEN_START_POS = 1200;
+    public static final int LIFT_SPECIMEN_START_POS = 1150;
     public static final int LIFT_SPECIMEN_END_POS = 870;
     public static int liftToTransfer = 200;
     public static int liftToPark = 0;
