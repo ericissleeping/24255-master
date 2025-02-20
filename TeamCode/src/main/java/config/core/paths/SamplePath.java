@@ -16,8 +16,8 @@ public class SamplePath {
     public static Pose scorePose1 = new Pose(17, 124, Math.toRadians(135));
     public static Pose grabSample2= new Pose(30,128,Math.toRadians(180));
     public static Pose grabSample3= new Pose(31,130,Math.toRadians(-152));
-    public static Pose grabSample4= new Pose(62,96,Math.toRadians(100));
-    public static Pose detectSample4= new Pose(62,94,Math.toRadians(80));
+    public static Pose grabSample4= new Pose(62,96,Math.toRadians(90));
+    public static Pose detectSample4= new Pose(58,96,Math.toRadians(90));
 
 
 

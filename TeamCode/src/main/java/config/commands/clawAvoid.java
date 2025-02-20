@@ -5,13 +5,13 @@ import com.pedropathing.util.Timer;
 
 import config.core.Robot;
 
-public class Detect extends CommandBase {
+public class clawAvoid extends CommandBase {
     private final Robot robot;
 
     private int state = 0;
     private Timer timer = new Timer();
 
-    public Detect(Robot robot) {
+    public clawAvoid(Robot robot) {
         this.robot = robot;
     }
 
@@ -24,17 +24,9 @@ public class Detect extends CommandBase {
     public void execute() {
         switch (state) {
             case 1:
-                robot.getI().hoverDetect();
-                robot.getI().clawHor();
-                setState(2);
+                robot.getI().avoid();
+                setState(-1);
                 break;
-            case 2:
-                if (robot.getI().detect()){
-                    setState(-1);
-                }
-                else{
-                    setState(1);
-                }
         }
     }
     @Override

@@ -28,7 +28,7 @@ public class PreloadBucket extends CommandBase {
                 setState(2);
                 break;
             case 2:
-                if (timer.getElapsedTimeSeconds() > 0.6) {
+                if (timer.getElapsedTimeSeconds() > 0.5) {
                     robot.getL().toHighBucket();
                     setState(3);
                 }

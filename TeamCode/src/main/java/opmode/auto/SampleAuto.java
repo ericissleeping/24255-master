@@ -20,6 +20,11 @@ import config.subsystems.commands.ExtendZero;
 import com.pedropathing.commands.FollowPath;
 
 import com.arcrobotics.ftclib.command.*;
+import com.pedropathing.localization.Pose;
+import com.pedropathing.pathgen.BezierCurve;
+import com.pedropathing.pathgen.BezierLine;
+import com.pedropathing.pathgen.PathBuilder;
+import com.pedropathing.pathgen.Point;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Autonomous(name = "Sample Auto")
 public class SampleAuto extends OpModeCommand {
@@ -85,13 +90,24 @@ public class SampleAuto extends OpModeCommand {
                                 new ExtendZero(r)
                         ),
                         new ParallelRaceGroup(
-                                new FollowPath(r.getF(), SamplePath.detectSample4(), true, 0.2),
-                                new Detect(r)
+                                new FollowPath(r.getF(),SamplePath.detectSample4(),true,0.2),
+                                new SequentialCommandGroup(
+                                        new Detect(r),
+                                        new FollowPath(r.getF(), new PathBuilder()
+                                                .addPath(new BezierLine(new Point(r.getF().getPose()),new Point(r.getF().getPose())))
+                                                .setLinearHeadingInterpolation(90, 90)
+                                                .setZeroPowerAccelerationMultiplier(2)
+                                                .build(), true, 0.8),
+                                        new clawCollect(r)
+                                )
                         ),
-                        new clawCollect(r),
                         new WaitCommand(700),
                         new ParallelCommandGroup(
-                                new FollowPath(r.getF(), SamplePath.scoreSample4(), true, 1),
+                                new FollowPath(r.getF(), new PathBuilder()
+                                        .addPath(new BezierCurve(new Point(r.getF().getPose()),new Point(new Pose(58,108)),new Point(new Pose(17, 124))))
+                                        .setLinearHeadingInterpolation(90, 135)
+                                        .setZeroPowerAccelerationMultiplier(2)
+                                        .build(), true, 0.8),
                                 new Bucket(r)
                         ),
                         new ParallelRaceGroup(

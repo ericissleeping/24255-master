@@ -87,11 +87,8 @@ public class SampleAutoStable extends OpModeCommand {
                                 ),
                                 new ExtendZero(r)
                         ),
-                        new WaitCommand(1000),
-                        new ParallelRaceGroup(
-                                new Detect(r),
-                                new WaitCommand(5000)
-                        )
+                        new WaitCommand(1000)
+//                        new FollowPath(r.getF(), SamplePath.detectSample4(), true, 0.5)
                 )
         );
     }

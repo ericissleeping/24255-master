@@ -5,13 +5,13 @@ import com.pedropathing.util.Timer;
 
 import config.core.Robot;
 
-public class Bucket extends CommandBase {
+public class specimenScorePreload extends CommandBase {
     private final Robot robot;
 
     private int state = 0;
     private Timer timer = new Timer();
 
-    public Bucket(Robot robot) {
+    public specimenScorePreload(Robot robot) {
         this.robot = robot;
     }
 
@@ -24,27 +24,21 @@ public class Bucket extends CommandBase {
     public void execute() {
         switch (state) {
             case 1:
-                robot.getO().transfer();
+                robot.getL().toChamberStart();
                 setState(2);
                 break;
             case 2:
-                if (timer.getElapsedTimeSeconds() > 0.05) {
-                    robot.getL().toHighBucket();
+                if (timer.getElapsedTimeSeconds() > 1.3) {
+                    robot.getL().toChamberEnd();
                     setState(3);
                 }
                 break;
             case 3:
-                if (timer.getElapsedTimeSeconds() > 0.9) {
-                    robot.getO().score();
-                    setState(4);
-                }
-                break;
-            case 4:
-                if (timer.getElapsedTimeSeconds() > 0.6) {
-                    robot.getO().transfer();
+                if (timer.getElapsedTimeSeconds() > 0.2) {
+                    robot.getO().openSpecimenClaw();
                     setState(-1);
                 }
-
+                break;
 
         }
     }

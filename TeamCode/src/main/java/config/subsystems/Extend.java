@@ -71,7 +71,7 @@ public class Extend {
     }
 
     public void toZero(){
-        extendToPos(220);
+        extendToPos(50);
     }
 
     public void toFull(){
